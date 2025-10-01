@@ -1,9 +1,9 @@
 import { createPinia } from "pinia";
 import { createApp } from "vue";
-import App from "./pages/home/Home.vue";
-import router from "./router";
+import Home from "./App.vue";
+import router from "./router"; // 匯入 router
 
-const app = createApp(App);
+const app = createApp(Home);
+app.use(router); // ✅ 這行很重要
 app.use(createPinia());
-app.use(router);
 app.mount("#app");

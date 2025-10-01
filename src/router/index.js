@@ -9,7 +9,9 @@ const routes = [
   { path: "/cart", component: Cart },
 ];
 
-export default createRouter({
+const router = createRouter({
   history: createWebHistory(),
   routes,
 });
+
+export default router;
