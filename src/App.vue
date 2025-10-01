@@ -1,11 +1,16 @@
-<script setup lang="ts"></script>
-
 <template>
-  <h1>You did it!</h1>
-  <p>
-    Visit <a href="https://vuejs.org/" target="_blank" rel="noopener">vuejs.org</a> to read the
-    documentation
-  </p>
+  <div>
+    <nav>
+      <router-link to="/">首頁</router-link> |
+      <router-link to="/cart">購物車</router-link>
+    </nav>
+    <router-view />
+    <!-- ✅ 關鍵：顯示 router 對應的頁面 -->
+  </div>
 </template>
 
-<style scoped></style>
+<script>
+export default {
+  name: "App",
+};
+</script>
