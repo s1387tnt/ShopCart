@@ -1,0 +1,44 @@
+.shop {
+  padding: 20px;
+}
+
+.shop h1 {
+  margin-bottom: 20px;
+}
+
+.shop ul {
+  list-style: none;
+  padding: 0;
+}
+
+.shop li {
+  margin: 10px 0;
+}
+
+.shop button {
+  margin-left: 10px;
+  padding: 5px 10px;
+  background: #3498db;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.shop button:hover {
+  background: #2980b9;
+}
+
+.btn {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 10px 15px;
+  background: #2ecc71;
+  color: white;
+  border-radius: 5px;
+  text-decoration: none;
+}
+
+.btn:hover {
+  background: #27ae60;
+}
