@@ -1,4 +1,5 @@
-import { useCartStore } from "../cart/cart"; // ✅ 路徑要依實際位置修改
+import { useCartStore } from "../../stores/cart";
+
 
 export default {
   name: "ShopPage",
