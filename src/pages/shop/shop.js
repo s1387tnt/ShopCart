@@ -1,21 +1,38 @@
-import { useCartStore } from "../../stores/cart";
-
+import { ref, computed } from "vue";
+import { useCartStore } from "../../stores/stores.js";
+import { products } from "../../data/products.js";
 
 export default {
-  name: "ShopPage",
   setup() {
     const cart = useCartStore();
 
-    const products = [
-      { id: 1, name: "商品 A", price: 100 },
-      { id: 2, name: "商品 B", price: 200 },
-      { id: 3, name: "商品 C", price: 300 },
+    const categories = [
+      "電子產品",
+      "居家生活",
+      "食品飲品",
+      "文具書籍",
+      "美妝保養",
+      "寵物用品",
+      "玩具運動",
+      "旅遊戶外",
+      "趣味小物",
     ];
 
-    function add(product) {
-      cart.addItem(product);
-    }
+    const searchQuery = ref("");
+    const selectedCategory = ref("全部");
 
-    return { cart, products, add };
+    const filteredProducts = computed(() =>
+      products.filter((p) => {
+        const matchName =
+          p.name.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+          p.desc.toLowerCase().includes(searchQuery.value.toLowerCase());
+        const matchCategory =
+          selectedCategory.value === "全部" ||
+          p.category === selectedCategory.value;
+        return matchName && matchCategory;
+      })
+    );
+
+    return { products, cart, searchQuery, selectedCategory, categories, filteredProducts };
   },
 };
