@@ -17,6 +17,11 @@
 
 <script setup>
 import CartIcon from "./components/CartIcon.vue";
+import { useCartStore } from "./stores/stores.js";
+
+// ✅ 啟動時讀取購物車資料
+const cart = useCartStore();
+cart.initCart();
 </script>
 
 <style>

@@ -1,28 +1,62 @@
 import { defineStore } from "pinia";
-import { ref, computed } from "vue";
 
-export const useCartStore = defineStore("cart", () => {
-  const items = ref([]);
+export const useCartStore = defineStore("cart", {
+  state: () => ({
+    items: JSON.parse(localStorage.getItem("cart") || "[]"),
+    totalItems: 0,
+    totalPrice: 0,
+  }),
 
-  function addItem(product) {
-    const existing = items.value.find((p) => p.id === product.id);
-    if (existing) existing.quantity++;
-    else items.value.push({ ...product, quantity: 1 });
-    updateTotals();
-  }
+  actions: {
+    // ✅ 初始化購物車（載入 localStorage）
+    initCart() {
+      this.items = JSON.parse(localStorage.getItem("cart") || "[]");
+      this.updateTotals();
+    },
 
-  function removeItem(index) {
-    items.value.splice(index, 1);
-    updateTotals();
-  }
+    // ✅ 儲存購物車資料到 localStorage
+    saveCart() {
+      localStorage.setItem("cart", JSON.stringify(this.items));
+      this.updateTotals();
+    },
 
-  function updateTotals() {
-    totalItems.value = items.value.reduce((t, i) => t + i.quantity, 0);
-    totalPrice.value = items.value.reduce((t, i) => t + i.price * i.quantity, 0);
-  }
+    // ✅ 新增商品
+    addItem(product) {
+      const existing = this.items.find((i) => i.id === product.id);
+      if (existing) {
+        existing.quantity += 1;
+      } else {
+        this.items.push({ ...product, quantity: 1 });
+      }
+      this.saveCart();
+    },
 
-  const totalItems = ref(0);
-  const totalPrice = ref(0);
+    // ✅ 移除商品
+    removeItem(index) {
+      this.items.splice(index, 1);
+      this.saveCart();
+    },
 
-  return { items, addItem, removeItem, updateTotals, totalItems, totalPrice };
+    // ✅ 更新數量（增加 / 減少）
+    updateQty(index, qty) {
+      if (qty < 1) return;
+      this.items[index].quantity = qty;
+      this.saveCart();
+    },
+
+    // ✅ 清空購物車
+    clearCart() {
+      this.items = [];
+      this.saveCart();
+    },
+
+    // ✅ 更新總金額與數量
+    updateTotals() {
+      this.totalItems = this.items.reduce((sum, i) => sum + i.quantity, 0);
+      this.totalPrice = this.items.reduce(
+        (sum, i) => sum + i.price * i.quantity,
+        0
+      );
+    },
+  },
 });

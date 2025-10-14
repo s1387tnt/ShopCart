@@ -6,8 +6,15 @@
 </template>
 
 <script setup>
+import { onMounted } from "vue";
 import { useCartStore } from "../stores/stores.js";
+
 const cart = useCartStore();
+
+// ✅ 一載入就從 localStorage 初始化購物車
+onMounted(() => {
+  cart.initCart();
+});
 </script>
 
 <style scoped>
@@ -29,10 +36,12 @@ const cart = useCartStore();
   transition: all 0.25s ease;
   z-index: 100;
 }
+
 .cart-icon:hover {
   background: #2ecc71;
   transform: scale(1.1);
 }
+
 .badge {
   position: absolute;
   top: 10px;
